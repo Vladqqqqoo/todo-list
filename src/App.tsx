@@ -1,24 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+  let [tasks, setTasks] = useState([
+    { id: 1, title: "JS", isDone: true },
+    { id: 2, title: "HTML", isDone: true },
+    { id: 3, title: "CSS", isDone: true },
+    { id: 4, title: "REACT", isDone: false },
+    { id: 5, title: "ANGULAR", isDone: false },
+  ]);
+
+  const handleClick = (id: number) => {
+    const newTaskList = tasks.filter((t) => {
+      if (t.id !== id) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    setTasks(newTaskList);
+
+    console.log(tasks);
+  };
+
+  const taskListArr = tasks.map((el) => {
+    return (
+      <li key={el.id}>
+        <input type="checkbox" checked={el.isDone} />
+        <span>{el.title} </span>
+        <button
+          onClick={() => {
+            handleClick(el.id);
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          delete
+        </button>
+      </li>
+    );
+  });
+
+  return (
+    <div>
+      <div>Custom list</div>
+      <ul>{taskListArr}</ul>
     </div>
   );
 }
